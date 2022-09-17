@@ -1,3 +1,4 @@
+import * as React from "react";
 import dayjs from "dayjs";
 import { ButtonHTMLAttributes } from "react";
 import dayjsEs from "dayjs/locale/es";
@@ -47,13 +48,14 @@ export function Calendar(props: CalendarProps) {
           </div>
         ))}
         {/* Loop through daysInMonth using .map here! */}
+        {/* Bonus, render every item in the array as a button and place an onClick handler to be able to change `currentDate` with the button's date, like: <button onClick={() => props.onDateChange(day)}>{day.format(...)}</> */}
       </div>
     </div>
   );
 }
 
 export function CalendarContainer() {
-  // use useState to store the current date. destructure the return like: `const [currentDate, setCurrentDate] = useState(...)`
+  // use React.useState to store the current date. destructure the return like: `const [currentDate, setCurrentDate] = React.useState(...)`
   const currentDate = dayjs();
   const currentMonthDays = currentDate.daysInMonth();
 
