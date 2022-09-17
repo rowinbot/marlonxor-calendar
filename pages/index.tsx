@@ -12,7 +12,9 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="min-h-screen space-y-2">
-        <h1 className="text-xl font-medium">Welcome to Marlonxor Calendar</h1>
+        <h1 className="text-xl font-medium">
+          Bienvenido al calendario de Marlonxor
+        </h1>
 
         <CalendarContainer />
       </main>

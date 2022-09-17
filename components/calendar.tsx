@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
 import { ButtonHTMLAttributes } from "react";
+import dayjsEs from "dayjs/locale/es";
+
+dayjs.locale(dayjsEs);
 
 function CalendarButton(
   props: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className">
@@ -12,8 +15,12 @@ function CalendarButton(
   );
 }
 
-export function Calendar() {
-  const today = dayjs();
+type CalendarProps = {
+  currentDate: dayjs.Dayjs;
+  onDateChange: (date: dayjs.Dayjs) => void;
+};
+export function Calendar(props: CalendarProps) {
+  const today = dayjs(props.currentDate);
   const week = Array(7)
     .fill(0)
     .map((_, i) => today.set("day", i));
@@ -24,9 +31,9 @@ export function Calendar() {
   return (
     <div className="w-[400px] border-2 border-black p-4 rounded-xl">
       <div className="flex items-center text-center mb-2">
-        <CalendarButton onClick={onPrev}>Prev</CalendarButton>
+        <CalendarButton onClick={onPrev}>Anterior</CalendarButton>
         <div className="flex-1">{today.format("YYYY")}</div>
-        <CalendarButton onClick={onNext}>Next</CalendarButton>
+        <CalendarButton onClick={onNext}>Siguiente</CalendarButton>
       </div>
 
       <div className="grid grid-cols-7 gap-2 text-center items-center">
@@ -41,5 +48,21 @@ export function Calendar() {
 }
 
 export function CalendarContainer() {
-  return <Calendar />;
+  const currentDate = dayjs();
+  const currentMonthDays = currentDate.daysInMonth();
+
+  const onDateChange = () => {
+    console.log("change currentDate here");
+  };
+
+  return (
+    <div>
+      <p>
+        {"La fecha seleccionada es: " +
+          currentDate.format("dddd DD [de] MMMM [del] YYYY")}{" "}
+      </p>
+      <p>{"El mes seleccionado tiene tantos días: " + currentMonthDays} </p>
+      <Calendar currentDate={currentDate} onDateChange={onDateChange} />
+    </div>
+  );
 }
