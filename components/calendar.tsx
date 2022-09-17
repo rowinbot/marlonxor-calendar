@@ -23,8 +23,12 @@ export function Calendar(props: CalendarProps) {
   const today = dayjs(props.currentDate);
   const week = Array(7)
     .fill(0)
-    .map((_, i) => today.set("day", i));
+    .map((_, i) => today.clone().set("day", i));
+  // Create an array with all the days in the month for the current date' month. Something like today.clone().set("d", 31) but for every day in the month.
+  const daysInMonth: dayjs.Dayjs[] = [];
 
+  // In these event handlers call `props.onDateChange` with the new date
+  // Check out the method `.set()` from the dayjs library to change the month to a previous or next one
   const onPrev = () => console.log("handle prev action here");
   const onNext = () => console.log("handle next action here");
 
@@ -42,16 +46,19 @@ export function Calendar(props: CalendarProps) {
             <span className="font-medium">{day.format("ddd")}</span>
           </div>
         ))}
+        {/* Loop through daysInMonth using .map here! */}
       </div>
     </div>
   );
 }
 
 export function CalendarContainer() {
+  // use useState to store the current date. destructure the return like: `const [currentDate, setCurrentDate] = useState(...)`
   const currentDate = dayjs();
   const currentMonthDays = currentDate.daysInMonth();
 
-  const onDateChange = () => {
+  const onDateChange = (newDate: dayjs.Dayjs) => {
+    // call `setCurrentDate` here with `newDate`
     console.log("change currentDate here");
   };
 
